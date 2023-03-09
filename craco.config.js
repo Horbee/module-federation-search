@@ -5,6 +5,8 @@ const deps = require("./package.json").dependencies;
 module.exports = {
   webpack: {
     configure: (config) => {
+      config.output.publicPath = "auto";
+
       if (!config.plugins) {
         config.plugins = [];
       }
@@ -13,12 +15,9 @@ module.exports = {
         new ModuleFederationPlugin({
           name: "search",
           filename: "remoteEntry.js",
-          remotes: {
-            // web: "web@http://localhost:5000/assets/remoteEntry.js",
-          },
+          remotes: {},
           exposes: {
-            "./FeaturedProducts":
-              "./src/components/shared/FeaturedProducts.tsx",
+            "./FeaturedProducts": "./src/components/shared/FeaturedProducts",
           },
           shared: {
             ...deps,
